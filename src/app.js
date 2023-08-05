@@ -15,27 +15,35 @@ function generateComputerMove() {
 }
 
 function createWinMatrix(numElements) {
-    const winMatrix = Array.from({ length: numElements }, () => Array(numElements).fill(0));
+    const winMatrix = [];
 
-    for (let i = 0; i < numElements; i++) {
-        for (let j = 0; j < numElements; j++) {
-            const diff = (i - j + numElements) % numElements;
-            if (diff === 0) {
-                winMatrix[i][j] = 0; // Ничья
-            } else if (diff <= (numElements - 1) / 2) {
-                winMatrix[i][j] = 1; // i побеждает j
-            } else {
-                winMatrix[i][j] = -1; // i проигрывает j
-            }
+    let firstRow = [0];
+
+    for (let i = 1; i < Math.ceil(numMoves / 2); i++) {
+        if (i % 2 === 0) {
+            firstRow.push(1,-1)
+        } else {
+            firstRow.push(-1,1)
         }
+    }
+    winMatrix.push(firstRow);
+
+    for (let i = 1; i < numMoves; i++) {
+        let currentArr = firstRow.slice();
+        currentArr.unshift(currentArr.pop());
+        let otherArr = currentArr.slice();
+        winMatrix.push(otherArr);
+        firstRow = currentArr;
     }
 
     return winMatrix;
 }
 
+let winMatrix = createWinMatrix(numMoves);
+
 export function checkGameResult(userMoveIndex, computerMoveIndex) {
-    let winMatrix = createWinMatrix(numMoves);
-    const result = winMatrix[userMoveIndex - 1][computerMoveIndex - 1];
+
+    let result = winMatrix[userMoveIndex - 1][computerMoveIndex - 1];
 
     if (result === 1) {
         return "You win!";
@@ -46,7 +54,7 @@ export function checkGameResult(userMoveIndex, computerMoveIndex) {
     }
 }
 
-export async function main() {
+export  async function main() {
     rules.checkCorrectInput();
 
     console.log("HMAC: " + key.hmac);
