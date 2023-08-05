@@ -1,8 +1,9 @@
-import { Key } from "./key.js";
-import { Table } from "./table.js";
-import { Rules } from "./rules.js"
+import {Key} from "./key.js";
+import {Table} from "./table.js";
+import {Rules} from "./rules.js"
 
 export let moves = process.argv.slice(2);
+const numMoves = moves.length;
 const computerMove = generateComputerMove();
 let key = new Key(computerMove);
 let table = new Table(moves);
@@ -13,23 +14,36 @@ function generateComputerMove() {
     return moves[Math.floor(Math.random() * moves.length)];
 }
 
-export function checkGameResult(userMoveIndex, computerMoveIndex) {
-    const diff = (userMoveIndex - computerMoveIndex);
-    let gameResult;
+function createWinMatrix(numElements) {
+    const winMatrix = Array.from({ length: numElements }, () => Array(numElements).fill(0));
 
-    if (diff === 0) {
-        gameResult = "It's a tie!";
-    } else if (diff < 0 && diff >= -3) {
-        gameResult = "You win!";
-    } else if (diff < 0){
-        gameResult = "Computer wins!";
-    } else if (diff > 3) {
-        gameResult = "You win!";
-    } else {
-        gameResult = "Computer wins!";
+    for (let i = 0; i < numElements; i++) {
+        for (let j = 0; j < numElements; j++) {
+            const diff = (i - j + numElements) % numElements;
+            if (diff === 0) {
+                winMatrix[i][j] = 0; // Ничья
+            } else if (diff <= (numElements - 1) / 2) {
+                winMatrix[i][j] = 1; // i побеждает j
+            } else {
+                winMatrix[i][j] = -1; // i проигрывает j
+            }
+        }
     }
 
-    return gameResult;
+    return winMatrix;
+}
+
+export function checkGameResult(userMoveIndex, computerMoveIndex) {
+    let winMatrix = createWinMatrix(numMoves);
+    const result = winMatrix[userMoveIndex - 1][computerMoveIndex - 1];
+
+    if (result === 1) {
+        return "You win!";
+    } else if (result === -1) {
+        return "Computer wins!";
+    } else {
+        return "It's a tie!";
+    }
 }
 
 export async function main() {

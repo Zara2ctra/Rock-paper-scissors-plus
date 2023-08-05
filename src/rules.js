@@ -4,6 +4,8 @@ export class Rules {
         this.uniqueMoves = [...new Set(this.moves)]
     }
 
+
+
     checkCorrectInput() {
         if (this.moves.length%2 === 0) {
             throw new Error("The number of arguments must be odd")

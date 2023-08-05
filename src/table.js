@@ -1,4 +1,6 @@
 import readline from "readline";
+import { table } from 'table';
+import {checkGameResult, moves} from "./app.js";
 
 export class Table {
     constructor(moves) {
@@ -37,9 +39,31 @@ export class Table {
     }
 
     printHelp(answer, resolve) {
-        console.log("Available moves:");
-        this.printAvailableMoves(this.moves);
+        let description = moves;
+        description.unshift(' v PC\\User >');
+        const data = [
+            description,
+        ];
+        pushOtherLines();
+        console.log(table(data));
         this.getUserMoveIndex().then(resolve);
+
+        function pushOtherLines() {
+            for (let i = 1; i < moves.length; i++) {
+                let currentArr = [moves[i]];
+
+                for (let j = 1; j < moves.length; j++) {
+                    if (checkGameResult(i, j) === "It's a tie!") {
+                        currentArr.push("Draw")
+                    } else if (checkGameResult(i, j) === "Computer wins!") {
+                        currentArr.push("Lose")
+                    } else if (checkGameResult(i, j) === "You win!") {
+                        currentArr.push("Win")
+                    }
+                }
+                data.push(currentArr)
+            }
+        }
     }
 
     printInvalidMove(resolve) {
