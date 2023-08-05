@@ -1,0 +1,22 @@
+{
+  "name": "rock-paper-scissors-plus",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "test.js",
+  "scripts": {
+    "test": "mocha test.js",
+    "postinstall": "node postinstall.js"
+  },
+  "keywords": [],
+  "author": "Aliaksandr Prytychanka",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "semver": "^6.3.0"
+  }
+}
