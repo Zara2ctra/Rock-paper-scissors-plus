@@ -45,3 +45,4 @@ export async function main() {
     console.log("HMAC key: " + key.secretKey)
 }
 
+await main();
