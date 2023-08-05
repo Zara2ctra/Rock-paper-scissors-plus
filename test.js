@@ -54,7 +54,7 @@ describe("Testing rules", function() {
 
     it("Test game result when we have 2 arguments", function() {
         let rules = new Rules(["rock"]);
-        expect(() => rules.checkCorrectInput()).to.throw("The number of moves must be greater than two");
+        expect(() => rules.checkCorrectInput()).to.throw("The number of moves must be greater");
     });
 
     it("Test game result when we have 2 arguments", function() {

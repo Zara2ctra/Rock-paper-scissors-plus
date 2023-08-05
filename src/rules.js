@@ -10,7 +10,7 @@ export class Rules {
         } else if (this.moves.length !== this.uniqueMoves.length) {
             throw new Error("All arguments must be unique")
         } else if (this.moves.length < 3) {
-            throw new Error("The number of moves must be greater than two")
+            throw new Error("The number of moves must be greater")
         }
     }
 }
