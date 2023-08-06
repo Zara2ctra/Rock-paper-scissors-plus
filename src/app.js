@@ -5,13 +5,11 @@ import {Rules} from "./rules.js"
 export let moves = process.argv.slice(2);
 const numMoves = moves.length;
 let rules = new Rules(moves);
-rules.checkCorrectInput();
 export let winMatrix = rules.createWinMatrix(numMoves);
 const computerMove = rules.generateComputerMove();
 let table = new Table(moves);
 let key = new Key(computerMove);
-let computerMoveIndex = moves.indexOf(computerMove);
-rules.checkCorrectInput();
+let computerMoveIndex = moves.indexOf(computerMove) - 1;
 
 export  async function main() {
     console.log("HMAC: " + key.hmac);

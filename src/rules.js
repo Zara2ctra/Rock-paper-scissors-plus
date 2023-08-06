@@ -2,6 +2,7 @@ export class Rules {
     constructor(moves) {
         this.moves = moves;
         this.numElements = moves.length;
+        this.checkCorrectInput();
         this.computerMove = this.generateComputerMove();
         this.winMatrix = this.createWinMatrix();
     }
@@ -28,7 +29,7 @@ export class Rules {
     }
 
     checkGameResult(userMoveIndex, computerMoveIndex) {
-        let result = this.winMatrix[computerMoveIndex][userMoveIndex];
+        let result = this.winMatrix[userMoveIndex][computerMoveIndex];
         if (result === 1) {
             return "You win!";
         } else if (result === -1) {
@@ -39,7 +40,7 @@ export class Rules {
     }
 
     checkCorrectInput() {
-        if (this.moves.length%2 === 0) {
+        if (this.numElements%2 === 0) {
             throw new Error("The number of arguments must be odd")
         } else if (this.moves.length !== [...new Set(this.moves)].length) {
             throw new Error("All arguments must be unique")

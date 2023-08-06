@@ -8,29 +8,30 @@ export class Table {
         this.numMoves = this.moves.length;
     }
 
-    getUserMoveIndex() {
+    async getUserMoveIndex() {
         const inputMove = readline.createInterface({
             input: process.stdin,
             output: process.stdout
         });
 
-        return this.checkAnswer(inputMove)
+        return await this.checkAnswer(inputMove)
     }
 
     async checkAnswer(inputMove) {
         return new Promise(resolve => {
             inputMove.question("Enter your move: ", answer => {
-                inputMove.close();
+                inputMove.close()
                 answer = answer.trim();
 
                 if (answer === '?') {
-                    this.printHelp(answer, resolve)
+                    this.printHelp(resolve);
                 } else if (answer === '0'){
                     inputMove.close();
                 }else {
                     const index = parseInt(answer);
                     if (index >= 0 && index <= this.numMoves) {
                         resolve(index);
+                        inputMove.close();
                     } else {
                         this.printInvalidMove(resolve)
                     }
@@ -39,7 +40,7 @@ export class Table {
         });
     }
 
-    printHelp(answer, resolve) {
+    async printHelp(resolve) {
         let description = this.moves;
         description.unshift(' v PC\\User >');
         const data = [

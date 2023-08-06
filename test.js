@@ -20,7 +20,7 @@ describe("Testing game result", function() {
     });
 
     it("Test game result when user move index 3 and computer move index 4", function() {
-        const expectedResult = "Computer wins!";
+        const expectedResult = "You win!";
         const moves = [1,2,3,4,5]
         const rules = new Rules(moves);
 
@@ -28,7 +28,7 @@ describe("Testing game result", function() {
     });
 
     it("Test game result when user move index 4 and computer move index 3", function() {
-        const expectedResult = "You win!";
+        const expectedResult = "Computer wins!";
         const moves = [1,2,3,4,5]
         const rules = new Rules(moves);
 
@@ -36,7 +36,7 @@ describe("Testing game result", function() {
     });
 
     it("Test game result when user move index 1 and computer move index 0", function() {
-        const expectedResult = "You win!";
+        const expectedResult = "Computer wins!";
         const moves = [1,2,3,4,5]
         const rules = new Rules(moves);
 
@@ -44,7 +44,7 @@ describe("Testing game result", function() {
     });
 
     it("Test game result when user move index 0 and computer move index 1", function() {
-        const expectedResult = "Computer wins!";
+        const expectedResult = "You win!";
         const moves = [1,2,3,4,5]
         const rules = new Rules(moves);
 
