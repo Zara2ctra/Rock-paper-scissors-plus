@@ -13,14 +13,7 @@ export class Rules {
     createWinMatrix() {
         const winMatrix = [];
         let countDigit = (this.numElements - 1) / 2;
-        let firstRow = [0];
-
-        for (let i = 0; i < countDigit; i++) {
-            firstRow.push(1);
-        }
-        for (let i = 0; i < countDigit; i++) {
-            firstRow.push(-1);
-        }
+        let firstRow = [0, ...Array(countDigit).fill(1), ...Array(countDigit).fill(-1)];
         winMatrix.push(firstRow);
 
         for (let i = 1; i < this.numElements; i++) {
@@ -35,7 +28,7 @@ export class Rules {
     }
 
     checkGameResult(userMoveIndex, computerMoveIndex) {
-        let result = this.winMatrix[userMoveIndex][computerMoveIndex];
+        let result = this.winMatrix[computerMoveIndex][userMoveIndex];
         if (result === 1) {
             return "You win!";
         } else if (result === -1) {
