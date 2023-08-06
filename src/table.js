@@ -1,10 +1,11 @@
 import readline from "readline";
 import { table } from 'table';
-import {checkGameResult, moves} from "./app.js";
+import {winMatrix} from "./app.js";
 
 export class Table {
     constructor(moves) {
         this.moves = moves
+        this.numMoves = this.moves.length;
     }
 
     getUserMoveIndex() {
@@ -28,7 +29,7 @@ export class Table {
                     inputMove.close();
                 }else {
                     const index = parseInt(answer);
-                    if (index >= 0 && index <= this.moves.length) {
+                    if (index >= 0 && index <= this.numMoves) {
                         resolve(index);
                     } else {
                         this.printInvalidMove(resolve)
@@ -39,31 +40,14 @@ export class Table {
     }
 
     printHelp(answer, resolve) {
-        let description = moves;
+        let description = this.moves;
         description.unshift(' v PC\\User >');
         const data = [
             description,
         ];
-        pushOtherLines();
+        this.pushOtherLines(this.numMoves, this.moves, winMatrix, data);
         console.log(table(data));
         this.getUserMoveIndex().then(resolve);
-
-        function pushOtherLines() {
-            for (let i = 1; i < moves.length; i++) {
-                let currentArr = [moves[i]];
-
-                for (let j = 1; j < moves.length; j++) {
-                    if (checkGameResult(i, j) === "It's a tie!") {
-                        currentArr.push("Draw")
-                    } else if (checkGameResult(i, j) === "Computer wins!") {
-                        currentArr.push("Lose")
-                    } else if (checkGameResult(i, j) === "You win!") {
-                        currentArr.push("Win")
-                    }
-                }
-                data.push(currentArr)
-            }
-        }
     }
 
     printInvalidMove(resolve) {
@@ -71,9 +55,26 @@ export class Table {
         this.getUserMoveIndex().then(resolve);
     }
 
-    printAvailableMoves(moves) {
-        moves.forEach((move, index) => console.log(`${index + 1} - ${move}`));
+    printAvailableMoves() {
+        this.moves.forEach((move, index) => console.log(`${index + 1} - ${move}`));
         console.log("0 - exit");
         console.log("? - help");
+    }
+
+    pushOtherLines(numMoves, moves, winMatrix, data) {
+        for (let i = 0; i < numMoves; i++) {
+            let currentArr = [moves[i+1]];
+
+            for (let j = 0; j < numMoves; j++) {
+                if (winMatrix[i][j] === 0) {
+                    currentArr.push("Draw")
+                } else if (winMatrix[i][j] === -1) {
+                    currentArr.push("Lose")
+                } else if (winMatrix[i][j] === 1) {
+                    currentArr.push("Win")
+                }
+            }
+            data.push(currentArr)
+        }
     }
 }

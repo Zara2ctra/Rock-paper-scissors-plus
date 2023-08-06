@@ -1,43 +1,54 @@
 import { expect } from 'chai';
-import {checkGameResult} from './src/app.js';
 import { Rules } from './src/rules.js';
 
 
 describe("Testing game result", function() {
     it("Test game result when user move index 3 and computer move index 3", function() {
         const expectedResult = "It's a tie!";
+        const moves = [1,2,3,4,5]
+        const rules = new Rules(moves);
 
-        expect(checkGameResult(3, 3)).to.equal(expectedResult);
+        expect(rules.checkGameResult(3, 3)).to.equal(expectedResult);
     });
 
-    it("Test game result when user move index 5 and computer move index 5", function() {
+    it("Test game result when user move index 4 and computer move index 4", function() {
         const expectedResult = "It's a tie!";
+        const moves = [1,2,3,4,5]
+        const rules = new Rules(moves);
 
-        expect(checkGameResult(5, 5)).to.equal(expectedResult);
+        expect(rules.checkGameResult(4, 4)).to.equal(expectedResult);
     });
 
-    it("Test game result when user move index 3 and computer move index 5", function() {
+    it("Test game result when user move index 3 and computer move index 4", function() {
         const expectedResult = "You win!";
+        const moves = [1,2,3,4,5]
+        const rules = new Rules(moves);
 
-        expect(checkGameResult(3, 5)).to.equal(expectedResult);
+        expect(rules.checkGameResult(3, 4)).to.equal(expectedResult);
     });
 
-    it("Test game result when user move index 5 and computer move index 3", function() {
+    it("Test game result when user move index 4 and computer move index 3", function() {
         const expectedResult = "Computer wins!";
+        const moves = [1,2,3,4,5]
+        const rules = new Rules(moves);
 
-        expect(checkGameResult(5, 3)).to.equal(expectedResult);
+        expect(rules.checkGameResult(4, 3)).to.equal(expectedResult);
     });
 
-    it("Test game result when user move index 1 and computer move index 17", function() {
+    it("Test game result when user move index 1 and computer move index 0", function() {
         const expectedResult = "Computer wins!";
+        const moves = [1,2,3,4,5]
+        const rules = new Rules(moves);
 
-        expect(checkGameResult(1, 17)).to.equal(expectedResult);
+        expect(rules.checkGameResult(1, 0)).to.equal(expectedResult);
     });
 
-    it("Test game result when user move index 17 and computer move index 1", function() {
+    it("Test game result when user move index 0 and computer move index 1", function() {
         const expectedResult = "You win!";
+        const moves = [1,2,3,4,5]
+        const rules = new Rules(moves);
 
-        expect(checkGameResult(17, 1)).to.equal(expectedResult);
+        expect(rules.checkGameResult(0, 1)).to.equal(expectedResult);
     });
 })
 
